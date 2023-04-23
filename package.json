@@ -1,7 +1,6 @@
 {
   "name": "sinau_restapi",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
@@ -16,5 +15,14 @@
     "express": "^4.18.2",
     "mysql": "^2.18.1",
     "nanoid": "^3.3.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MochammadYanuarFitroni/Try_RestAPI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MochammadYanuarFitroni/Try_RestAPI/issues"
+  },
+  "homepage": "https://github.com/MochammadYanuarFitroni/Try_RestAPI#readme",
+  "description": ""
 }
