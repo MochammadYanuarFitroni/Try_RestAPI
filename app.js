@@ -9,7 +9,7 @@ app.use(express.json());
 
 //Get All Book
 app.get('/books', (req, res) => {
-    const queryAllData = 'SELECT * FROM books';
+    const queryAllData = 'SELECT id, name, author FROM books';
 
     conn.query(queryAllData, (err, result) => {
         if (err){
@@ -28,7 +28,8 @@ app.get('/books', (req, res) => {
 
 //Post or Insert Book
 app.post('/books', (req, res) => {
-    const id = customAlphabet('123abc', 5);
+    const nanoid = customAlphabet('123abc', 5);
+    const id = nanoid();
     const param = req.body;
     const name = param.name;
     const author = param.author;
@@ -37,7 +38,7 @@ app.post('/books', (req, res) => {
     const update_at = insert_at;
 
     const queryInsertData = 'INSERT INTO books (id, name, author, year, insert_at, update_at) VALUES (?, ?, ?, ?, ?, ?)';
-    const queryInsert = [id(), name, author, year, insert_at, update_at]
+    const queryInsert = [id, name, author, year, insert_at, update_at]
     conn.query(queryInsertData, queryInsert, (err, result) => {
         if (err){
             console.log(err)
@@ -50,12 +51,31 @@ app.post('/books', (req, res) => {
         res.status(201).json({
             status: 'success',
             message: 'Data berhasil ditambahkan',
-            data: id()
+            data: id
         });
     });
-
 });
 
+//Get Book by Id
+app.get('/books/:id', (req, res) => {
+    const id = req.params.id;
+
+    const queryById = 'SELECT * FROM books WHERE id = ?';
+    conn.query(queryById, id, (err, result) => {
+        if (err){
+            res.status(500).json({
+                status: 'false',
+                message: err.sqlMessage,
+                data: null
+            });
+        } 
+        res.status(200).json({
+            status: 'success',
+            message: 'Data berhasil ditampilkan',
+            data: result
+        });
+    });
+});
 
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
