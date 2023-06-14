@@ -1,0 +1,5 @@
+uvicorn
+fastapi
+gunicorn
+traceback
+python-multipart
